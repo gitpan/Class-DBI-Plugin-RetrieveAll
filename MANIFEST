@@ -1,0 +1,6 @@
+Changes
+MANIFEST			This list of files
+Makefile
+Makefile.PL
+lib/Class/DBI/Plugin/RetrieveAll.pm
+t/01.t
