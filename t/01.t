@@ -4,7 +4,7 @@ use Test::More;
 
 BEGIN {
 	eval "use DBD::SQLite";
-	plan $@ ? (skip_all => 'needs DBD::SQLite for testing') : (tests => 3);
+	plan $@ ? (skip_all => 'needs DBD::SQLite for testing') : (tests => 4);
 }
 
 package My::Film;
@@ -69,3 +69,11 @@ while (my ($title, $year) = each %films) {
 		[qw/Hospital Dekalog Veronique Blue White Red Heaven/], "Compound sort";
 }
 
+
+My::Film->retrieve_all_sort_field('title');
+
+{
+	my @films = My::Film->retrieve_all;
+	is_deeply [ map $_->title, @films ],
+		[qw/Blue Dekalog Heaven Hospital Red Veronique White/], "Sorted by title";
+}

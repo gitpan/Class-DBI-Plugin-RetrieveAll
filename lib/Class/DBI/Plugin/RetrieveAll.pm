@@ -1,6 +1,6 @@
 package Class::DBI::Plugin::RetrieveAll;
 
-our $VERSION = 1.00;
+our $VERSION = '1.01';
 
 use strict;
 use warnings;
@@ -16,10 +16,19 @@ Class::DBI::Plugin::RetrieveAll - more complex retrieve_all() for Class::DBI
 
 	my @by_date = My::Class->retrieve_all_sorted_by("date");
 
+	# or
+
+	__PACKAGE__->retrieve_all_sort_field('date');
+
+	my @by_date = My::Class->retrieve_all;
+
 =head1 DESCRIPTION
 
-This is a simple plugin to a Class::DBI subclass which provides a
-'retrieve_all_sorted_by' method.
+This is a simple plugin to a Class::DBI subclass which allows for simple
+sorting of retrieve_all calls. There are two main ways to use this.
+Firstly, we create a new method 'retrieve_all_sorted_by' which takes an
+argument of how to sort. We also add a way to set a default field that
+any retrieve_all() should use to sort by.
 
 =head1 METHODS
 
@@ -38,10 +47,17 @@ through:
 
 	my @by_date = My::Class->retrieve_all_sorted_by("date DESC, reference_no");
 
+=head2 retrieve_all_sort_field
+
+  __PACKAGE__->retrieve_all_sort_field('date');
+
+This method changes the default retrieve_all() in the Class to be
+auto-sorted by the field given. Again this will be passed through
+directly, so you can have complex ORDER BY clauses. 
+
 =cut
 
 sub import {
-	my ($self, @pairs) = @_;
 	my $caller = caller();
 	no strict 'refs';
 
@@ -53,6 +69,22 @@ sub import {
 	*{"$caller\::retrieve_all_sorted_by"} = sub {
 		my ($class, $order_by) = @_;
 		return $class->sth_to_objects($class->sql_retrieve_all_sorted($order_by));
+	};
+
+	$caller->mk_classdata('__plugin_retall_sortfield');
+
+	*{"$caller\::retrieve_all_sort_field"} = sub {
+		my ($class, $field) = @_;
+		$class->__plugin_retall_sortfield($field);
+	};
+
+	# I hate that SUPER means *my* SUPER *now* - not $class->SUPER then
+	my $super = $caller->can('retrieve_all');
+	*{"$caller\::retrieve_all"} = sub {
+		my $class = shift;
+		my $field = $class->__plugin_retall_sortfield 
+			or return $super->($class);
+		return $class->retrieve_all_sorted_by($field);
 	};
 }
 

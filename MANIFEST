@@ -4,3 +4,4 @@ Makefile
 Makefile.PL
 lib/Class/DBI/Plugin/RetrieveAll.pm
 t/01.t
+META.yml                                 Module meta-data (added by MakeMaker)
