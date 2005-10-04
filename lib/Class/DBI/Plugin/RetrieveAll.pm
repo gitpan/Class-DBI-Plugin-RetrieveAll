@@ -1,6 +1,6 @@
 package Class::DBI::Plugin::RetrieveAll;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 use strict;
 use warnings;
@@ -90,11 +90,16 @@ sub import {
 
 =head1 AUTHOR
 
-Tony Bowden, E<lt>kasei@tmtm.comE<gt>.
+Tony Bowden
 
-=head1 COPYRIGHT
+=head1 BUGS and QUERIES
 
-Copyright (C) 2004 Kasei. All rights reserved.
+Please direct all correspondence regarding this module to:
+  bug-Class-DBI-Plugin-RetrieveAll@rt.cpan.org
+
+=head1 COPYRIGHT and LICENSE
+
+Copyright (C) 2004-5 Kasei. All rights reserved.
 
 This module is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
