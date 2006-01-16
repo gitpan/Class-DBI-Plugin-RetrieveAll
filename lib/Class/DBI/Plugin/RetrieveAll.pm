@@ -1,6 +1,6 @@
 package Class::DBI::Plugin::RetrieveAll;
 
-our $VERSION = '1.03';
+our $VERSION = '1.04';
 
 use strict;
 use warnings;
@@ -45,10 +45,10 @@ This method will be exported into the calling class, and allows for
 retrieving all the objects of the class, sorted by the given column.
 
 The argument given will be passed straight through to the database 'as
-is', and is not checked in any way, so an error here will probably result
-in an error from the database, rather than Class::DBI itself. However,
-because of this it is possible to pass more complex ORDER BY clauses
-through:
+is', and is not checked in any way, so an error here will usually
+in an error from the database, rather than Class::DBI itself. 
+
+This makes it possible to pass more complex ORDER BY clauses through:
 
 	my @by_date = My::Class->retrieve_all_sorted_by("date DESC, reference_no");
 
