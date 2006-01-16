@@ -1,6 +1,6 @@
 package Class::DBI::Plugin::RetrieveAll;
 
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 
 use strict;
 use warnings;
@@ -24,11 +24,16 @@ Class::DBI::Plugin::RetrieveAll - more complex retrieve_all() for Class::DBI
 
 =head1 DESCRIPTION
 
-This is a simple plugin to a Class::DBI subclass which allows for simple
-sorting of retrieve_all calls. There are two main ways to use this.
+This is a simple plugin to a Class::DBI subclass that allows for simple
+sorting of the results of a retrieve_all(). 
+
+There are two main ways to use this.  
+
 Firstly, we create a new method 'retrieve_all_sorted_by' which takes an
-argument of how to sort. We also add a way to set a default field that
-any retrieve_all() should use to sort by.
+argument of how to sort.
+
+We also add a method for 'retrieve_all_sort_field' that sets a default
+field that any retrieve_all() will use for sorting.
 
 =head1 METHODS
 
@@ -99,7 +104,7 @@ Please direct all correspondence regarding this module to:
 
 =head1 COPYRIGHT and LICENSE
 
-Copyright (C) 2004-5 Kasei. All rights reserved.
+Copyright (C) 2004-2006 Kasei. All rights reserved.
 
 This module is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
